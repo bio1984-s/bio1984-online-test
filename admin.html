@@ -45,7 +45,7 @@ h1{font-size:clamp(30px,5vw,52px);line-height:1.02;margin:10px 0}h2{margin:0 0 1
   <div class="eyebrow">BIO1984 • Boshqaruv markazi</div>
   <h1>Testlarni boshqaring.</h1>
   <p class="muted">Test qo‘shish, tahrirlash, faollashtirish, yopish va vaqtini belgilash uchun boshqaruv paneli.</p>
-  <div class="note"><b>Hozirgi holat:</b> panel test katalogini boshqaradi. Global o‘quvchi qurilmalarida bir xil ko‘rinishi uchun keyingi bosqichda Google Apps Script orqali markaziy baza bilan ulaymiz.</div>
+  <div class="note"><b>Holat:</b> 1–3-mavzular testi katalogga ulangan: <b>78 ta savol</b>, 40 daqiqa. Keyingi bosqichda katalog va natijalarni Google Apps Script orqali barcha qurilmalar uchun markazlashtiramiz.</div>
 </section>
 
 <section class="grid">
@@ -111,9 +111,23 @@ let tests = load();
 let editing = null;
 
 function load(){
-  try{const raw=localStorage.getItem(KEY); if(raw) return JSON.parse(raw);}catch(e){}
-  const out={};
-  Object.keys(SEED).forEach(k=>{const t=SEED[k];out[k]={id:t.id,name:t.name,fullName:t.fullName,duration:t.duration,grade:t.grade||"8-sinf",status:"active",questionCount:(t.questions||[]).length};});
+  let saved={};
+  try{const raw=localStorage.getItem(KEY); if(raw) saved=JSON.parse(raw)||{};}catch(e){saved={};}
+  const out={...saved};
+  Object.keys(SEED).forEach(k=>{
+    const seed=SEED[k];
+    const old=out[k]||{};
+    out[k]={
+      ...old,
+      id:seed.id,
+      name:old.name||seed.name,
+      fullName:old.fullName||seed.fullName,
+      duration:Number(old.duration)||seed.duration,
+      grade:old.grade||seed.grade,
+      status:old.status||seed.status,
+      questionCount:Math.max(Number(old.questionCount)||0, Number(seed.questionCount)||0)
+    };
+  });
   return out;
 }
 function persist(){localStorage.setItem(KEY,JSON.stringify(tests)); render();}
