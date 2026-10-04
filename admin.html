@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a33">
+<title>BIO1984 — Admin Panel</title>
+<style>
+:root{--navy:#071a33;--navy2:#0d2945;--green:#14b889;--green2:#0b9d78;--bg:#eef5f8;--card:#fff;--text:#10283b;--muted:#718797;--line:#d8e5ec;--red:#d9534f;--amber:#d99119;--blue:#2677c9}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#071a33 0 150px,#eef5f8 150px);color:var(--text)}
+.top{position:sticky;top:0;z-index:20;background:rgba(7,26,51,.96);color:#fff;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px)}
+.topin{max-width:1180px;margin:auto;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:950;letter-spacing:.08em;font-size:17px}.brand span{color:#36d5b0}
+.adminpill{padding:9px 13px;border:1px solid rgba(54,213,176,.45);border-radius:999px;color:#b8efe2;font-weight:800;font-size:13px}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 18px 70px}
+.hero{background:linear-gradient(135deg,#fff,#f5fffc);border:1px solid #d7e6ed;border-radius:26px;padding:28px;box-shadow:0 20px 55px rgba(18,52,73,.10);margin-bottom:20px}
+.eyebrow{color:#159c7d;font-weight:950;letter-spacing:.16em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.02;margin:10px 0}h2{margin:0 0 14px}.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 10px 28px rgba(18,52,73,.06)}.stat b{display:block;font-size:28px;margin-top:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 12px 35px rgba(18,52,73,.07);margin-bottom:20px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:var(--green);color:#fff}.btn:hover{filter:brightness(.96)}
+.btn.secondary{background:#edf4f7;color:#315166;border:1px solid var(--line)}.btn.red{background:#fff0ef;color:#b63d39;border:1px solid #f1c4c1}.btn.blue{background:#eaf3ff;color:#2168a8;border:1px solid #c9def5}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:16px}table{border-collapse:collapse;width:100%;min-width:850px}th,td{padding:14px;border-bottom:1px solid #edf2f5;text-align:left}th{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#6c8290;background:#f7fafb}tr:last-child td{border-bottom:0}
+.status{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}.on{background:#e7f9f3;color:#087e62}.off{background:#f0f2f4;color:#788792}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:rgba(4,16,30,.62);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.show{display:flex}.modalbox{width:min(760px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:24px;padding:24px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}label{display:block;font-weight:800;font-size:13px;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid #cfdde5;border-radius:12px;padding:12px;font:inherit;background:#fbfdfe;color:var(--text)}textarea{min-height:180px;resize:vertical}.full{grid-column:1/-1}
+.note{padding:14px 16px;background:#f0f8ff;border:1px solid #cde4f7;border-radius:14px;color:#3e6076;font-size:14px;line-height:1.55}
+.warn{padding:14px 16px;background:#fff8e9;border:1px solid #f0d79d;border-radius:14px;color:#76571c;font-size:14px;line-height:1.55;margin-top:14px}
+.footer{text-align:center;color:#8396a2;font-size:13px;margin-top:24px}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.topin{padding:15px}.wrap{padding:22px 12px 55px}.hero,.card{padding:18px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <div class="brand">BIOLOGIYA <span>ONLINE TESTLAR PLATFORMASI</span></div>
+  <div class="adminpill">👨‍💼 ADMIN PANEL</div>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <div class="eyebrow">BIO1984 • Boshqaruv markazi</div>
+  <h1>Testlarni boshqaring.</h1>
+  <p class="muted">Test qo‘shish, tahrirlash, faollashtirish, yopish va vaqtini belgilash uchun boshqaruv paneli.</p>
+  <div class="note"><b>Hozirgi holat:</b> panel test katalogini boshqaradi. Global o‘quvchi qurilmalarida bir xil ko‘rinishi uchun keyingi bosqichda Google Apps Script orqali markaziy baza bilan ulaymiz.</div>
+</section>
+
+<section class="grid">
+  <div class="stat"><span class="muted">Jami testlar</span><b id="total">0</b></div>
+  <div class="stat"><span class="muted">Faol testlar</span><b id="active">0</b></div>
+  <div class="stat"><span class="muted">Yopiq testlar</span><b id="closed">0</b></div>
+  <div class="stat"><span class="muted">Savollar</span><b id="questions">0</b></div>
+</section>
+
+<section class="card">
+  <div class="toolbar">
+    <div><h2>📚 Testlar</h2><div class="muted">Platformadagi test katalogi</div></div>
+    <div class="actions">
+      <button class="btn secondary" onclick="exportData()">⬇️ Zaxira</button>
+      <button class="btn secondary" onclick="document.getElementById('importFile').click()">⬆️ Import</button>
+      <button class="btn" onclick="openEditor()">➕ Yangi test</button>
+      <input id="importFile" type="file" accept=".json" hidden onchange="importData(event)">
+    </div>
+  </div>
+  <div class="tablewrap" style="margin-top:16px">
+    <table><thead><tr><th>Test</th><th>Sinf</th><th>Savol</th><th>Vaqt</th><th>Holat</th><th>Amallar</th></tr></thead>
+    <tbody id="rows"></tbody></table>
+  </div>
+</section>
+
+<section class="card">
+  <h2>⚙️ Admin funksiyalari</h2>
+  <div class="note">
+    <b>➕ Test qo‘shish</b> — yangi test katalogiga qo‘shiladi.<br>
+    <b>✏️ Tahrirlash</b> — nomi, sinfi, vaqt va holatini o‘zgartirasiz.<br>
+    <b>🗑 O‘chirish</b> — test katalogidan olib tashlanadi.<br>
+    <b>⏱ Vaqt</b> — har bir test uchun alohida daqiqa belgilanadi.<br>
+    <b>🔒 / 🟢</b> — testni yopish yoki o‘quvchilarga ochish.
+  </div>
+  <div class="warn"><b>Muhim:</b> bu versiyadagi katalog brauzerda saqlanadi. Uni barcha o‘quvchilarga bir vaqtda tarqatish uchun markaziy Google Sheets/Apps Script bazasini ulash kerak. Men buni keyingi bosqichda tayyorlab beraman.</div>
+</section>
+
+<div class="footer">BIO1984 • “Shifokorlik sari” — biz bilan tayyorlaning! • @bio1984</div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <div class="toolbar"><div><div class="eyebrow">TEST SOZLAMALARI</div><h2 id="modalTitle">Yangi test</h2></div><button class="btn secondary" onclick="closeEditor()">✕</button></div>
+    <div class="formgrid" style="margin-top:18px">
+      <div><label>Test ID</label><input id="f_id" placeholder="test-2"></div>
+      <div><label>Sinf</label><select id="f_grade"><option>5-sinf</option><option>6-sinf</option><option>7-sinf</option><option selected>8-sinf</option><option>9-sinf</option><option>10-sinf</option><option>11-sinf</option></select></div>
+      <div><label>Test nomi</label><input id="f_name" placeholder="4–6-mavzular"></div>
+      <div><label>Vaqt (daqiqa)</label><input id="f_duration" type="number" min="1" value="40"></div>
+      <div class="full"><label>To‘liq nomi</label><input id="f_full" placeholder="Odam va uning salomatligi — 4–6-mavzular"></div>
+      <div class="full"><label>Holati</label><select id="f_status"><option value="active">🟢 Faol</option><option value="closed">🔒 Yopiq</option></select></div>
+    </div>
+    <div class="actions" style="justify-content:flex-end;margin-top:18px">
+      <button class="btn secondary" onclick="closeEditor()">Bekor qilish</button>
+      <button class="btn" onclick="saveTest()">SAQLASH</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SEED = {"test-1":{id:"test-1",name:"1–3-mavzular",fullName:"Odam va uning salomatligi — 1–3-mavzular",duration:40,questions:QUESTIONS}};
+const KEY = "bio1984_admin_tests_v1";
+let tests = load();
+let editing = null;
+
+function load(){
+  try{const raw=localStorage.getItem(KEY); if(raw) return JSON.parse(raw);}catch(e){}
+  const out={};
+  Object.keys(SEED).forEach(k=>{const t=SEED[k];out[k]={id:t.id,name:t.name,fullName:t.fullName,duration:t.duration,grade:t.grade||"8-sinf",status:"active",questionCount:(t.questions||[]).length};});
+  return out;
+}
+function persist(){localStorage.setItem(KEY,JSON.stringify(tests)); render();}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function render(){
+  const arr=Object.values(tests);
+  document.getElementById("total").textContent=arr.length;
+  document.getElementById("active").textContent=arr.filter(x=>x.status==="active").length;
+  document.getElementById("closed").textContent=arr.filter(x=>x.status!=="active").length;
+  document.getElementById("questions").textContent=arr.reduce((s,x)=>s+Number(x.questionCount||0),0);
+  document.getElementById("rows").innerHTML=arr.length?arr.map(t=>`<tr>
+    <td><b>${esc(t.name)}</b><div class="muted">${esc(t.fullName||"")}</div></td>
+    <td>${esc(t.grade||"—")}</td><td>${t.questionCount||0}</td><td>${t.duration||0} daq.</td>
+    <td><span class="status ${t.status==="active"?"on":"off"}">${t.status==="active"?"🟢 Faol":"🔒 Yopiq"}</span></td>
+    <td><div class="actions">
+      <button class="btn secondary" onclick="editTest('${esc(t.id)}')">✏️</button>
+      <button class="btn blue" onclick="toggleTest('${esc(t.id)}')">${t.status==="active"?"🔒":"🟢"}</button>
+      <button class="btn red" onclick="deleteTest('${esc(t.id)}')">🗑</button>
+    </div></td>
+  </tr>`).join(""):'<tr><td colspan="6" class="muted">Hozircha test yo‘q.</td></tr>';
+}
+function openEditor(id=null){
+  editing=id;
+  document.getElementById("modalTitle").textContent=id?"Testni tahrirlash":"Yangi test";
+  const t=id?tests[id]:{id:"test-"+(Object.keys(tests).length+1),grade:"8-sinf",name:"Yangi test",fullName:"",duration:40,status:"active",questionCount:0};
+  f_id.value=t.id; f_grade.value=t.grade||"8-sinf"; f_name.value=t.name||""; f_full.value=t.fullName||""; f_duration.value=t.duration||40; f_status.value=t.status||"active";
+  modal.classList.add("show");
+}
+function closeEditor(){modal.classList.remove("show");}
+function saveTest(){
+  const id=f_id.value.trim(); if(!id)return alert("Test ID kiriting.");
+  if(!editing && tests[id])return alert("Bu Test ID allaqachon mavjud.");
+  tests[id]={id,name:f_name.value.trim()||"Nomsiz test",fullName:f_full.value.trim(),duration:Math.max(1,Number(f_duration.value)||40),grade:f_grade.value,status:f_status.value,questionCount:editing?Number(tests[id].questionCount||0):0};
+  persist(); closeEditor();
+}
+function editTest(id){openEditor(id);}
+function toggleTest(id){if(!tests[id])return;tests[id].status=tests[id].status==="active"?"closed":"active";persist();}
+function deleteTest(id){if(!tests[id])return;if(!confirm("Bu testni o‘chirishni tasdiqlaysizmi?"))return;delete tests[id];persist();}
+function exportData(){
+  const blob=new Blob([JSON.stringify(tests,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bio1984-tests-backup.json";a.click();URL.revokeObjectURL(a.href);
+}
+function importData(e){
+  const file=e.target.files[0]; if(!file)return;
+  const r=new FileReader(); r.onload=()=>{try{const x=JSON.parse(r.result);if(!x||typeof x!=="object")throw 0;tests=x;persist();alert("Testlar import qilindi.");}catch(err){alert("JSON fayl noto‘g‘ri.");}};r.readAsText(file);e.target.value="";
+}
+render();
+</script>
+</body></html>
